@@ -38,7 +38,7 @@ stages:
                 scriptLocation: inlineScript
                 inlineScript: |
                   az group create --name ${{ parameters.resourceGroupName }} --location ${{ parameters.region }}
-                  az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(Pipeline.Workspace)/build/Infrastructure/main.bicep --parameters webAppName=${{ parameters.webAppName }} functionAppStorageAccountName=${{ parameters.storageAccountName }} location=${{ parameters.region }}  > outputs.json
+                  az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(Pipeline.Workspace)/build/Infrastructure/main.bicep --parameters webAppName=${{ parameters.webAppName }} location=${{ parameters.region }}  > outputs.json
 
             - task: AzureRmWebAppDeployment@4
               displayName: '2. Deploy Application Code'
