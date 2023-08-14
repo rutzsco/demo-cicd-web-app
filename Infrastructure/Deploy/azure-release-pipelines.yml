@@ -3,11 +3,11 @@ trigger: none
 resources:
   pipelines:
   - pipeline: build
-    source: 'TVD Service - Build'
+    source: 'rutzsco.demo-cicd-web-app'
   
 variables:
   azureSubscription: 'Demo Account'
-  packageName: 'E3D.Services.TVD.zip'
+  packageName: 'DemoWebApp.zip'
 
 stages:
 - template: azure-release-pipelines-stage-template.yml
@@ -15,11 +15,7 @@ stages:
     stageName: 'CI'
     environment: 'CI'
     azureSubscription: ${{ variables.azureSubscription }}
-    resourceGroupName: 'demo-tvd-service-ci'
-    storageAccountName: 'demotvdservicecisa'
-    functionAppName: 'demo-tvd-service-ci'
-    cosmosDbAccountName: 'demo-tvd-service-db-ci'
-    serviceBusName: 'demo-tvd-service-db-ci'
-    logAnalyticsWorkspaceName: 'demo-tvd-service-la-ci'
+    resourceGroupName: 'rutzsco-demo-webapp'
+    webAppName: 'rutzsco-demo-webapp'
     region: 'eastus'
     packageName: ${{ variables.packageName }}
