@@ -3,7 +3,7 @@ trigger: none
 resources:
   pipelines:
   - pipeline: build
-    source: 'rutzsco.demo-cicd-web-app'
+    source: 'rutzsco.demo-cicd-web-app - build'
   
 variables:
   azureSubscription: 'Demo Account'
