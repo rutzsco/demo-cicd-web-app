@@ -39,3 +39,13 @@ stages:
                 inlineScript: |
                   az group create --name ${{ parameters.resourceGroupName }} --location ${{ parameters.region }}
                   az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(Pipeline.Workspace)/build/Infrastructure/main.bicep --parameters webAppName=${{ parameters.webAppName }} location=${{ parameters.region }}  > outputs.json
+
+            - task: AzureRmWebAppDeployment@4
+              displayName: '2. Deploy Application Code'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: ${{ parameters.azureSubscription }}
+                appType: webApp
+                WebAppName: ${{ parameters.webAppName }}
+                package: '$(Pipeline.Workspace)/build/App/${{ parameters.packageName }}'
+                AppSettings: ''
