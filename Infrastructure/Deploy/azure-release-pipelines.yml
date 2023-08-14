@@ -1,0 +1,38 @@
+trigger: none
+
+resources:
+  pipelines:
+  - pipeline: build
+    source: 'TVD Service - Build'
+  
+variables:
+  azureSubscription: 'Demo Account'
+  packageName: 'E3D.Services.TVD.zip'
+
+stages:
+- template: azure-release-pipelines-stage-template.yml
+  parameters:
+    stageName: 'CI'
+    environment: 'CI'
+    azureSubscription: ${{ variables.azureSubscription }}
+    resourceGroupName: 'demo-tvd-service-ci'
+    storageAccountName: 'demotvdservicecisa'
+    functionAppName: 'demo-tvd-service-ci'
+    cosmosDbAccountName: 'demo-tvd-service-db-ci'
+    serviceBusName: 'demo-tvd-service-db-ci'
+    logAnalyticsWorkspaceName: 'demo-tvd-service-la-ci'
+    region: 'eastus'
+    packageName: ${{ variables.packageName }}
+- template: azure-release-pipelines-stage-template.yml
+  parameters:
+    stageName: 'QA'
+    environment: 'QA'
+    azureSubscription: ${{ variables.azureSubscription }}
+    resourceGroupName: 'demo-tvd-service-qa'
+    storageAccountName: 'demotvdserviceqasa'
+    functionAppName: 'demo-tvd-service-qa'
+    cosmosDbAccountName: 'demo-tvd-service-db-qa'
+    serviceBusName: 'demo-tvd-service-db-qa'
+    logAnalyticsWorkspaceName: 'demo-tvd-service-la-qa'
+    region: 'eastus'
+    packageName: ${{ variables.packageName }}
