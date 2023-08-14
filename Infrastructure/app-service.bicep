@@ -45,6 +45,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
       minTlsVersion: '1.2'
       scmMinTlsVersion: '1.2'
       ftpsState: 'FtpsOnly'
+      alwaysOn: true
       metadata:[
         {
           name: 'CURRENT_STACK'
@@ -55,5 +56,6 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
     }
     serverFarmId: asp.id
     httpsOnly: true
+    clientAffinityEnabled: false
   }
 }
