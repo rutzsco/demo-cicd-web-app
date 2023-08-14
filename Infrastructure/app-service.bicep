@@ -21,6 +21,8 @@ param location string = resourceGroup().location
   'P4'
 ])
 param sku string = 'B1'
+param currentStack string = 'dotnet'
+param netFrameworkVersion string = 'v7.0'
 
 var appServicePlanName = 'AppServicePlan-${webAppName}'
 
@@ -43,6 +45,13 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
       minTlsVersion: '1.2'
       scmMinTlsVersion: '1.2'
       ftpsState: 'FtpsOnly'
+      metadata:[
+        {
+          name: 'CURRENT_STACK'
+          value: currentStack
+        }
+      ]
+      netFrameworkVersion: netFrameworkVersion
     }
     serverFarmId: asp.id
     httpsOnly: true
