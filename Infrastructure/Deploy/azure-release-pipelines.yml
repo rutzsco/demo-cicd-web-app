@@ -23,16 +23,3 @@ stages:
     logAnalyticsWorkspaceName: 'demo-tvd-service-la-ci'
     region: 'eastus'
     packageName: ${{ variables.packageName }}
-- template: azure-release-pipelines-stage-template.yml
-  parameters:
-    stageName: 'QA'
-    environment: 'QA'
-    azureSubscription: ${{ variables.azureSubscription }}
-    resourceGroupName: 'demo-tvd-service-qa'
-    storageAccountName: 'demotvdserviceqasa'
-    functionAppName: 'demo-tvd-service-qa'
-    cosmosDbAccountName: 'demo-tvd-service-db-qa'
-    serviceBusName: 'demo-tvd-service-db-qa'
-    logAnalyticsWorkspaceName: 'demo-tvd-service-la-qa'
-    region: 'eastus'
-    packageName: ${{ variables.packageName }}

@@ -7,15 +7,7 @@ parameters:
   default: ''
 - name: resourceGroupName
   default: ''
-- name: functionAppName
-  default: ''
-- name: storageAccountName
-  default: ''
-- name: cosmosDbAccountName
-  default: ''
-- name: serviceBusName
-  default: ''
-- name: logAnalyticsWorkspaceName
+- name: webAppName
   default: ''
 - name: region
   default: ''
@@ -46,13 +38,14 @@ stages:
                 scriptLocation: inlineScript
                 inlineScript: |
                   az group create --name ${{ parameters.resourceGroupName }} --location ${{ parameters.region }}
-                  az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(Pipeline.Workspace)/build/Infrastructure/main.bicep --parameters functionAppName=${{ parameters.functionAppName }} functionAppStorageAccountName=${{ parameters.storageAccountName }} cosmosDbAccountName=${{ parameters.cosmosDbAccountName }} serviceBusName=${{ parameters.serviceBusName }} location=${{ parameters.region }} logAnalyticsWorkspaceName=${{ parameters.logAnalyticsWorkspaceName }} > outputs.json
+                  az deployment group create --resource-group ${{ parameters.resourceGroupName }} --template-file $(Pipeline.Workspace)/build/Infrastructure/main.bicep --parameters webAppName=${{ parameters.webAppName }} functionAppStorageAccountName=${{ parameters.storageAccountName }} location=${{ parameters.region }}  > outputs.json
 
-            - task: AzureFunctionApp@1
-              displayName: '2. Azure functions app deploy'
+            - task: AzureRmWebAppDeployment@4
+              displayName: '2. Deploy Application Code'
               inputs:
+                ConnectionType: 'AzureRM'
                 azureSubscription: ${{ parameters.azureSubscription }}
-                appType: functionApp
-                appName: ${{ parameters.functionAppName }}
+                appType: webApp
+                WebAppName: ${{ parameters.webAppName }}
                 package: '$(Pipeline.Workspace)/build/App/${{ parameters.packageName }}'
                 AppSettings: ''
