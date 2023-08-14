@@ -1,6 +1,6 @@
 @description('Web app name.')
 @minLength(2)
-param webAppName string = 'webApp-${uniqueString(resourceGroup().id)}'
+param webAppName string
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
@@ -20,16 +20,8 @@ param location string = resourceGroup().location
   'P3'
   'P4'
 ])
-param sku string = 'F1'
+param sku string = 'B1'
 
-@description('The language stack of the app.')
-@allowed([
-  '.net'
-  'php'
-  'node'
-  'html'
-])
-param language string = '.net'
 var appServicePlanName = 'AppServicePlan-${webAppName}'
 
 resource asp 'Microsoft.Web/serverfarms@2022-03-01' = {
