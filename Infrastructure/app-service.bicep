@@ -46,6 +46,12 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
       scmMinTlsVersion: '1.2'
       ftpsState: 'FtpsOnly'
       alwaysOn: true
+      appSettings: [
+        {
+          name: 'WEBSITE_RUN_FROM_PACKAGE'
+          value: '1'
+        }
+      ]
       metadata:[
         {
           name: 'CURRENT_STACK'

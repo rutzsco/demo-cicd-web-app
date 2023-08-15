@@ -1,0 +1,21 @@
+trigger: none
+
+resources:
+  pipelines:
+  - pipeline: build
+    source: 'rutzsco.demo-cicd-web-app - build'
+  
+variables:
+  azureSubscription: 'Demo Account'
+  packageName: 'DemoWebApp.zip'
+
+stages:
+- template: azure-release-pipelines-stage-template-v2.yml
+  parameters:
+    stageName: 'CI'
+    environment: 'CI'
+    azureSubscription: ${{ variables.azureSubscription }}
+    resourceGroupName: 'rutzsco-demo-webapp'
+    webAppName: 'rutzsco-demo-webapp'
+    region: 'eastus'
+    packageName: ${{ variables.packageName }}
